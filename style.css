@@ -1,0 +1,74 @@
+header{
+    height: 25px;
+    width: 800px;
+    margin: auto;
+}
+
+main{
+    height: 500px;
+    width: 800px;
+    margin: auto;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+footer{
+    height: 25px;
+    width: 800px;
+    margin: auto;
+}
+
+canvas{
+    height: 400px;
+    width: 800px;
+    margin: auto;
+    border: 5px solid black;
+}
+
+input{
+    height: 50px;
+    width: 300px;
+    margin: 10px auto;
+}
+
+button{
+    height: 50px;
+    width: 100px;
+    font-size: large;
+    font-weight: bolder;
+    background-color: white;
+    margin: 10px auto;
+}
+
+#startGameContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#gameContainer{
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#gameButtonContainer{
+    display: none;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#playerScoreBoard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#winnerScreenContainer{
+    display: none;
+    flex-direction: row;
+    justify-content: space-around;
+}

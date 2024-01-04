@@ -1,3 +1,4 @@
+import { Coordinates2D } from "./coordinates2D.js";
 import { EnvironmentCollisionDetection } from "./environmentCollisionDetection.js";
 
 export class EnvironmentCollisionDetection2D extends EnvironmentCollisionDetection {

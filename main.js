@@ -32,7 +32,7 @@ function animate(){
             if(coordinates){
                 pong.setXVelocity((pong.xVelocity * -1));
                 pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
-                pong.setRotationDegree(pong.rotationDegree * -1);
+                pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
@@ -41,7 +41,7 @@ function animate(){
             if(coordinates){
                 pong.setXVelocity((pong.xVelocity * -1));
                 pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
-                pong.setRotationDegree(pong.rotationDegree * -1);
+                pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
@@ -187,8 +187,7 @@ startButton.addEventListener('click', (event) => {
     PONG_SIZE = parseInt(pongSizeInputField.value) || PONG_SIZE;
     PONG_INCREMENTING_XVELOCITY = parseInt(pongIncrementingXVelocityInputField.value) || PONG_INCREMENTING_XVELOCITY;
     PONG_INCREMENTING_YVELOCITY = parseInt(pongIncrementingYVelocityInputField.value) || PONG_INCREMENTING_YVELOCITY;
-    pong.setWidth(PONG_SIZE)
-        .setHeight(PONG_SIZE)
+    pong.setSize(PONG_SIZE)
         .setXVelocity(PONG_VELOCITY)
         .setYVelocity(PONG_VELOCITY)
         .setIncrementingXVelocity(PONG_INCREMENTING_XVELOCITY)
@@ -227,9 +226,3 @@ document.addEventListener('keydown', (event) => {
     }
 
 }, false);
-
-let arr = [];
-
-window.onkeydown = (event) => arr.push(`${event.code}: \"${event.code}\",`);
-
-setTimeout(() => arr.forEach(item => console.log(item)), 30000);

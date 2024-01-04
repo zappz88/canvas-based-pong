@@ -19,6 +19,10 @@ export class CollisionDetection2D extends CollisionDetection {
                this.#isWithinYRange(source, target); 
     }
 
+    static horizontalCollisionDetected(source, target){
+        return this.leftCollisionDetected(source, target) || this.rightCollisionDetected(source, target);
+    }
+
     static getLeftCollisionDetected(source, target){
         if(this.leftCollisionDetected(source, target)){
             return {
@@ -30,6 +34,15 @@ export class CollisionDetection2D extends CollisionDetection {
 
     static getRightCollisionDetected(source, target){
         if(this.rightCollisionDetected(source, target)){
+            return {
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
+            }
+        }
+    }
+
+    static getHorizontalCollisionDetected(source, target){
+        if(this.horizontalCollisionDetected(source, target)){
             return {
                 source: new Coordinates2D(source.x, source.y),
                 target: new Coordinates2D(target.x, target.y)
@@ -49,6 +62,10 @@ export class CollisionDetection2D extends CollisionDetection {
                this.#isWithinXRange(source, target);
     }
 
+    static verticalCollisionDetected(source, target){
+        return this.topCollisionDetected(source, target) || this.bottomCollisionDetected(source, target);
+    }
+
     static getTopCollisionDetected(source, target){
         if(this.topCollisionDetected(source, target)){
             return {
@@ -60,6 +77,24 @@ export class CollisionDetection2D extends CollisionDetection {
 
     static getBottomCollisionDetected(source, target){
         if(this.bottomCollisionDetected(source, target)){
+            return {
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
+            }
+        }
+    }
+
+    static getVerticalCollisionDetected(source, target){
+        if(this.verticalCollisionDetected(source, target)){
+            return {
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
+            }
+        }
+    }
+
+    static getCollisionDetected(source, target){
+        if(this.horizontalCollisionDetected(source, target) || this.verticalCollisionDetected(source, target)){
             return {
                 source: new Coordinates2D(source.x, source.y),
                 target: new Coordinates2D(target.x, target.y)

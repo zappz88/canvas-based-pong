@@ -5,6 +5,9 @@ import { StrokeShape } from "./strokeShape.js";
 import { StrokeRect } from "./strokeRect.js";
 import { CollisionDetection } from "./collisionDetection.js";
 import { CollisionDetection2D } from "./collisionDetection2D.js";
+import { Coordinates2D } from "./coordinates2D.js";
+import { Coordinates3D } from "./coordinates3D.js";
+import { EnvironmentCollisionDetection } from "./environmentCollisionDetection.js";
 import { EnvironmentCollisionDetection2D } from "./environmentCollisionDetection2D.js";
 import { KeyCode } from "./keyCode.js";
 import { KeyboardControlMap } from "./keyboardControlMap.js";
@@ -23,26 +26,26 @@ function animate(){
     boardObjects.forEach((boardObject) => boardObject.update());
 
     paddles.forEach((paddle) => {
-        let collision = null;
+        let coordinates = null;
         if(pong.isFacingRight){
-            collision = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
-            if(collision){
+            coordinates = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
+            if(coordinates){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((collision.sourceY - collision.targetY) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setRotationDegree(pong.rotationDegree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
         else{
-            collision = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
-            if(collision){
+            coordinates = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
+            if(coordinates){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((collision.sourceY - collision.targetY) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setRotationDegree(pong.rotationDegree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
-        collision = null;
+        coordinates = null;
     });
 
     if(EnvironmentCollisionDetection2D.verticalCollisionDetected(pong, ctx)){
@@ -225,4 +228,8 @@ document.addEventListener('keydown', (event) => {
 
 }, false);
 
+let arr = [];
 
+window.onkeydown = (event) => arr.push(`${event.code}: \"${event.code}\",`);
+
+setTimeout(() => arr.forEach(item => console.log(item)), 30000);

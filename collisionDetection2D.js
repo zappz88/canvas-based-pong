@@ -1,4 +1,5 @@
 import { CollisionDetection } from "./collisionDetection.js";
+import { Coordinates2D } from "./coordinates2D.js";
 
 export class CollisionDetection2D extends CollisionDetection {
 
@@ -21,10 +22,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getLeftCollisionDetected(source, target){
         if(this.leftCollisionDetected(source, target)){
             return {
-                sourceX: source.x,
-                sourceY: source.y,
-                targetX: target.x,
-                targetY: target.y
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
             }
         }
     }
@@ -32,10 +31,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getRightCollisionDetected(source, target){
         if(this.rightCollisionDetected(source, target)){
             return {
-                sourceX: source.x,
-                sourceY: source.y,
-                targetX: target.x,
-                targetY: target.y
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
             }
         }
     }
@@ -55,10 +52,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getTopCollisionDetected(source, target){
         if(this.topCollisionDetected(source, target)){
             return {
-                sourceX: source.x,
-                sourceY: source.y,
-                targetX: target.x,
-                targetY: target.y
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
             }
         }
     }
@@ -66,10 +61,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getBottomCollisionDetected(source, target){
         if(this.bottomCollisionDetected(source, target)){
             return {
-                sourceX: source.x,
-                sourceY: source.y,
-                targetX: target.x,
-                targetY: target.y
+                source: new Coordinates2D(source.x, source.y),
+                target: new Coordinates2D(target.x, target.y)
             }
         }
     }

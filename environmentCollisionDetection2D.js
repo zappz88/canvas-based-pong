@@ -1,13 +1,19 @@
-export class EnvironmentCollisionDetection2D {
+import { EnvironmentCollisionDetection } from "./environmentCollisionDetection.js";
 
-    constructor(){}
+export class EnvironmentCollisionDetection2D extends EnvironmentCollisionDetection {
+
+    constructor(){
+        super();
+    }
 
     static leftCollisionDetected(source, ctx){
-        return (source.x + source.xVelocity) <= -0.1;
+        const x = (source.x + source.xVelocity) + 0.1;
+        return super.leftCollisionDetected(x, ctx);
     }
 
     static rightCollisionDetected(source, ctx){
-        return ((source.x + source.width) + source.xVelocity) >= (ctx.canvas.width + 1);
+        const x = ((source.x + source.width) + source.xVelocity) - 1;
+        return super.rightCollisionDetected(x, ctx);
     }
 
     static horizontalCollisionDetected(source, ctx){
@@ -15,11 +21,13 @@ export class EnvironmentCollisionDetection2D {
     }
 
     static topCollisionDetected(source, ctx){
-        return (source.y + source.yVelocity) <= -0.1;
+        const y = (source.y + source.yVelocity) + 0.1;
+        return super.topCollisionDetected(y, ctx);
     }
 
     static bottomCollisionDetected(source, ctx){
-        return ((source.y + source.height) + source.yVelocity) >= (ctx.canvas.height + 1);
+        const y = ((source.y + source.height) + source.yVelocity) - 1;
+        return super.bottomCollisionDetected(y, ctx);
     }
 
     static verticalCollisionDetected(source, ctx){

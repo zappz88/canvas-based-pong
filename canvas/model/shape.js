@@ -66,6 +66,12 @@ export class Shape {
         return new Point2D(x, y);
     }
 
+    getCenterCoord(){
+        const x = ((this.x + this.width) / 2);
+        const y = ((this.y + this.height) / 2);
+        return new Point2D(x, y);
+    }
+
     getCoordinates(){
         //clockwise from canvas origin x,y ie topleft
         //[topleft, topright, bottomright, bottomleft, center]

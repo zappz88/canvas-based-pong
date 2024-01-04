@@ -149,13 +149,18 @@ const winnerScreenContainer = document.querySelector("#winnerScreenContainer");
 resetButton.addEventListener('click', (event) => {
     
     setGame();
-
+    
     paddleOne.setX(0)
              .setY((canvas.height - 50));
     paddleTwo.setX((canvas.width - 10))
              .setY((canvas.height - 50));
+    
+    PONG_XVELOCITY = randomIntegerSign() * (parseInt(pongVelocityInputField.value)) || PONG_XVELOCITY;
+    PONG_YVELOCITY = randomIntegerSign() * (parseInt(pongVelocityInputField.value)) || PONG_YVELOCITY;
     pong.setX((canvas.width / 2))
-        .setY((canvas.height / 2));
+        .setY((canvas.height / 2))
+        .setXVelocity(PONG_XVELOCITY)
+        .setYVelocity(PONG_YVELOCITY);
 
 }, false);
 
@@ -188,8 +193,8 @@ function setGame(){
     playerOneScoreBoard.innerText = playerOneScore;
     playerTwoScore = 0;
     playerTwoScoreBoard.innerText = playerTwoScore;
-    PONG_XVELOCITY = (randomIntegerSign() * parseInt(pongVelocityInputField.value)) || PONG_XVELOCITY;
-    PONG_YVELOCITY = (randomIntegerSign() * parseInt(pongVelocityInputField.value)) || PONG_YVELOCITY;
+    PONG_XVELOCITY = randomIntegerSign() * (parseInt(pongVelocityInputField.value)) || PONG_XVELOCITY;
+    PONG_YVELOCITY = randomIntegerSign() * (parseInt(pongVelocityInputField.value)) || PONG_YVELOCITY;
     PONG_SIZE = parseInt(pongSizeInputField.value) || PONG_SIZE;
     PONG_INCREMENTING_XVELOCITY = parseInt(pongIncrementingXVelocityInputField.value) || PONG_INCREMENTING_XVELOCITY;
     PONG_INCREMENTING_YVELOCITY = parseInt(pongIncrementingYVelocityInputField.value) || PONG_INCREMENTING_YVELOCITY;

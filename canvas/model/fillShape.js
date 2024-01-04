@@ -13,4 +13,8 @@ export class FillShape extends Shape {
         this.fillStyle = val;
         return this;
     }
+
+    clear(){
+        this.ctx.clearRect(this.x, this.y, this.width, this.height);
+    }
 }

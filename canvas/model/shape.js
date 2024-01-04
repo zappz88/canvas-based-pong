@@ -67,9 +67,8 @@ export class Shape {
     }
 
     getCenterCoord(){
-        const x = ((this.x + this.width) / 2);
-        const y = ((this.y + this.height) / 2);
-        return new Point2D(x, y);
+        const mid = ((this.x + this.width) / 2) + ((this.y + this.height) / 2);
+        return new Point2D(mid, mid);
     }
 
     getCoordinates(){

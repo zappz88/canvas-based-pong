@@ -30,7 +30,7 @@ function animate(){
             point = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
             if(point){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity(randomIntegerSign() * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
@@ -39,7 +39,7 @@ function animate(){
             point = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
             if(point){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity(randomIntegerSign() * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
@@ -88,6 +88,10 @@ function animate(){
     }
 }
 
+function randomIntegerSign(){
+    return (Math.round(Math.random()) ? 1 : -1)
+}
+
 function pauseGame(){
     paused = !paused;
 }
@@ -101,7 +105,8 @@ function ShowWinnerScreen(winner){
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const PLAYER_YVELOCITY = 3;
-var PONG_VELOCITY = 2;
+var PONG_XVELOCITY = randomIntegerSign() * 2;
+var PONG_YVELOCITY = randomIntegerSign() * 2;
 var PONG_SIZE = 10;
 var PONG_INCREMENTING_XVELOCITY = 0.1;
 var PONG_INCREMENTING_YVELOCITY = 0.1;
@@ -117,17 +122,15 @@ var paddleTwo = new Paddle(ctx, (canvas.width - 10), (canvas.height - 50), 0, 0,
 
 var paddles = [paddleOne, paddleTwo];
 
-var pong = new Pong(ctx, (canvas.width / 2), (canvas.height / 2), PONG_VELOCITY, PONG_VELOCITY, PONG_SIZE, PONG_SIZE, "#000000");
+var pong = new Pong(ctx, (canvas.width / 2), (canvas.height / 2), PONG_XVELOCITY, PONG_YVELOCITY, PONG_SIZE, PONG_SIZE, "#000000");
 
 var boardObjects = [paddleOne, paddleTwo, pong];
 
 var playerOneScore = 0;
 const playerOneScoreBoard = document.querySelector("#playerOneScoreBoard");
-playerOneScoreBoard.innerText = playerOneScore;
 
 var playerTwoScore = 0;
 const playerTwoScoreBoard = document.querySelector("#playerTwoScoreBoard");
-playerTwoScoreBoard.innerText = playerTwoScore;
 
 const startGameContainer = document.querySelector("#startGameContainer");
 const startButton = document.querySelector("#startButton");
@@ -139,35 +142,20 @@ const pongIncrementingYVelocityInputField = document.querySelector("#pongIncreme
 const winningScoreField = document.querySelector("#winningScoreField");
 const gameContainer = document.querySelector("#gameContainer");
 const gameButtonContainer = document.querySelector("#gameButtonContainer");
-const titleButton = document.querySelector("#titleButton");
+const resetButton = document.querySelector("#resetButton");
 const pauseButton = document.querySelector("#pauseButton");
 const winnerScreenContainer = document.querySelector("#winnerScreenContainer");
 
-titleButton.addEventListener('click', (event) => {
+resetButton.addEventListener('click', (event) => {
     
-    pauseGame(paused);
-    cancelAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setGame();
 
-    PONG_VELOCITY = 2;
-    PONG_SIZE = 10;
-    PONG_INCREMENTING_XVELOCITY = 0.1;
-    PONG_INCREMENTING_YVELOCITY = 0.1;
-    WINNING_SCORE = 10;
-    paused = true;
-    paddleOne = new Paddle(ctx, 0, (canvas.height - 50), 0, 0, 50, 10, "#000000", paddleOneKeyBoardControlMap);
-    paddleTwo = new Paddle(ctx, (canvas.width - 10), (canvas.height - 50), 0, 0, 50, 10, "#000000", paddleTwoKeyBoardControlMap);
-    pong = new Pong(ctx, (canvas.width / 2), (canvas.height / 2), PONG_VELOCITY, PONG_VELOCITY, PONG_SIZE, PONG_SIZE, "#000000");
-    playerOneScore = 0;
-    playerOneScoreBoard.innerText = playerOneScore;
-    playerTwoScore = 0;
-    playerTwoScoreBoard.innerText = playerTwoScore;
-
-    setTimeout(() => {
-        startGameContainer.style.display = "flex";
-        gameContainer.style.display = "none";
-        gameButtonContainer.style.display = "none";
-    }, 1000)
+    paddleOne.setX(0)
+             .setY((canvas.height - 50));
+    paddleTwo.setX((canvas.width - 10))
+             .setY((canvas.height - 50));
+    pong.setX((canvas.width / 2))
+        .setY((canvas.height / 2));
 
 }, false);
 
@@ -180,17 +168,8 @@ pauseButton.addEventListener('click', (event) => {
 
 startButton.addEventListener('click', (event) => {
     
-    WINNING_SCORE = parseInt(winningScoreInputField.value) || WINNING_SCORE;
-    winningScoreField.innerText = WINNING_SCORE;
-    PONG_VELOCITY = parseInt(pongVelocityInputField.value) || PONG_VELOCITY;
-    PONG_SIZE = parseInt(pongSizeInputField.value) || PONG_SIZE;
-    PONG_INCREMENTING_XVELOCITY = parseInt(pongIncrementingXVelocityInputField.value) || PONG_INCREMENTING_XVELOCITY;
-    PONG_INCREMENTING_YVELOCITY = parseInt(pongIncrementingYVelocityInputField.value) || PONG_INCREMENTING_YVELOCITY;
-    pong.setSize(PONG_SIZE)
-        .setXVelocity(PONG_VELOCITY)
-        .setYVelocity(PONG_VELOCITY)
-        .setIncrementingXVelocity(PONG_INCREMENTING_XVELOCITY)
-        .setIncrementingYVelocity(PONG_INCREMENTING_YVELOCITY);
+    setGame();
+
     startGameContainer.style.display = "none";
     gameContainer.style.display = "flex";
     gameButtonContainer.style.display = "flex";
@@ -202,12 +181,29 @@ startButton.addEventListener('click', (event) => {
 
 }, false);
 
+function setGame(){
+    WINNING_SCORE = parseInt(winningScoreInputField.value) || WINNING_SCORE;
+    winningScoreField.innerText = WINNING_SCORE;
+    playerOneScore = 0;
+    playerOneScoreBoard.innerText = playerOneScore;
+    playerTwoScore = 0;
+    playerTwoScoreBoard.innerText = playerTwoScore;
+    PONG_XVELOCITY = (randomIntegerSign() * parseInt(pongVelocityInputField.value)) || PONG_XVELOCITY;
+    PONG_YVELOCITY = (randomIntegerSign() * parseInt(pongVelocityInputField.value)) || PONG_YVELOCITY;
+    PONG_SIZE = parseInt(pongSizeInputField.value) || PONG_SIZE;
+    PONG_INCREMENTING_XVELOCITY = parseInt(pongIncrementingXVelocityInputField.value) || PONG_INCREMENTING_XVELOCITY;
+    PONG_INCREMENTING_YVELOCITY = parseInt(pongIncrementingYVelocityInputField.value) || PONG_INCREMENTING_YVELOCITY;
+    pong.setSize(PONG_SIZE)
+        .setXVelocity(PONG_XVELOCITY)
+        .setYVelocity(PONG_YVELOCITY)
+        .setIncrementingXVelocity(PONG_INCREMENTING_XVELOCITY)
+        .setIncrementingYVelocity(PONG_INCREMENTING_YVELOCITY);
+}
+
 document.addEventListener('keydown', (event) => {
         
     paddleOne.move(event, PLAYER_YVELOCITY);
-    // paddleOne.bump(event, pong);
     paddleTwo.move(event, PLAYER_YVELOCITY);
-    // paddleTwo.bump(event, pong);
 
 }, false);
 

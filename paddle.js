@@ -1,5 +1,5 @@
-import { StrokeRect } from "./strokeRect.js";
-import { EnvironmentCollisionDetection2D } from "./environmentCollisionDetection2D.js";
+import { StrokeRect } from "./canvas/model/strokeRect.js";
+import { CanvasCollisionDetection2D } from "./canvas/environment/canvasCollisionDetection2D.js";
 
 export class Paddle extends StrokeRect {
 
@@ -28,14 +28,14 @@ export class Paddle extends StrokeRect {
     update() {
         this.draw();
 
-        if(!EnvironmentCollisionDetection2D.verticalCollisionDetected(this, this.ctx)){
+        if(!CanvasCollisionDetection2D.verticalCollisionDetected(this, this.ctx)){
             this.y += this.yVelocity;
         }
         else{
             this.yVelocity = 0;
         }
 
-        if(!EnvironmentCollisionDetection2D.horizontalCollisionDetected(this, this.ctx)){
+        if(!CanvasCollisionDetection2D.horizontalCollisionDetected(this, this.ctx)){
             this.x += this.xVelocity;
         }
         else{

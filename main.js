@@ -1,16 +1,15 @@
-import { Shape } from "./shape.js";
-import { FillShape } from "./fillShape.js";
-import { FillRect } from "./fillRect.js";
-import { StrokeShape } from "./strokeShape.js";
-import { StrokeRect } from "./strokeRect.js";
-import { CollisionDetection } from "./collisionDetection.js";
-import { CollisionDetection2D } from "./collisionDetection2D.js";
-import { Coordinates2D } from "./coordinates2D.js";
-import { Coordinates3D } from "./coordinates3D.js";
-import { EnvironmentCollisionDetection } from "./environmentCollisionDetection.js";
-import { EnvironmentCollisionDetection2D } from "./environmentCollisionDetection2D.js";
-import { KeyCode } from "./keyCode.js";
-import { KeyboardControlMap } from "./keyboardControlMap.js";
+import { Shape } from "./canvas/model/shape.js";
+import { FillShape } from "./canvas/model/fillShape.js";
+import { FillRect } from "./canvas/model/fillRect.js";
+import { StrokeShape } from "./canvas/model/strokeShape.js";
+import { StrokeRect } from "./canvas/model/strokeRect.js";
+import { CollisionDetection } from "./canvas/model/collisionDetection/collisionDetection.js";
+import { CollisionDetection2D } from "./canvas/model/collisionDetection/collisionDetection2D.js";
+import { Point2D } from "./geometry/point2D.js";
+import { CanvasCollisionDetection } from "./canvas/environment/canvasCollisionDetection.js";
+import { CanvasCollisionDetection2D } from "./canvas/environment/canvasCollisionDetection2D.js";
+import { KeyCode } from "./controls/keyCode.js";
+import { KeyboardControlMap } from "./controls/keyboardControlMap.js";
 import { Paddle } from "./paddle.js";
 import { Pong } from "./pong.js";
 import { PowerUps } from "./powerUps.js";
@@ -26,29 +25,29 @@ function animate(){
     boardObjects.forEach((boardObject) => boardObject.update());
 
     paddles.forEach((paddle) => {
-        let coordinates = null;
+        let point = null;
         if(pong.isFacingRight){
-            coordinates = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
-            if(coordinates){
+            point = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
+            if(point){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
         else{
-            coordinates = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
-            if(coordinates){
+            point = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
+            if(point){
                 pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((coordinates.source.y - coordinates.target.y) / paddle.height) + paddle.yVelocity);
+                pong.setYVelocity((Math.round(Math.random()) ? 1 : -1) * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
                 pong.setDegree(pong.degree * -1);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
-        coordinates = null;
+        point = null;
     });
 
-    if(EnvironmentCollisionDetection2D.verticalCollisionDetected(pong, ctx)){
+    if(CanvasCollisionDetection2D.verticalCollisionDetected(pong, ctx)){
         if(pong.yVelocity < 0){
             pong.yVelocity = ((pong.yVelocity - pong.incrementingYVelocity) * -1);
         }
@@ -57,21 +56,21 @@ function animate(){
         }
     }
 
-    if(EnvironmentCollisionDetection2D.rightCollisionDetected(pong, ctx)){
+    if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
         pong.isFacingRight = !pong.isFacingRight;
         pong.setXVelocity((pong.xVelocity * -1));
         playerOneScore++;
         playerOneScoreBoard.innerText = playerOneScore;
     }
 
-    if(EnvironmentCollisionDetection2D.leftCollisionDetected(pong, ctx)){
+    if(CanvasCollisionDetection2D.leftCollisionDetected(pong, ctx)){
         pong.isFacingRight = !pong.isFacingRight;
         pong.setXVelocity((pong.xVelocity * -1));
         playerTwoScore++;
         playerTwoScoreBoard.innerText = playerTwoScore;
     }
 
-    if(EnvironmentCollisionDetection2D.rightCollisionDetected(pong, ctx)){
+    if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
         pong.isFacingRight = !pong.isFacingRight;
         pong.setXVelocity((pong.xVelocity * -1));
         playerOneScore++;

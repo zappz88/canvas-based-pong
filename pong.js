@@ -1,5 +1,5 @@
-import { FillRect } from "./fillRect.js";
-import { EnvironmentCollisionDetection2D } from "./environmentCollisionDetection2D.js";
+import { FillRect } from "./canvas/model/fillRect.js";
+import { CanvasCollisionDetection2D } from "./canvas/environment/canvasCollisionDetection2D.js";
 
 export class Pong extends FillRect {
 
@@ -47,7 +47,7 @@ export class Pong extends FillRect {
         this.draw();
         // this.rotate(20);
 
-        if(!EnvironmentCollisionDetection2D.verticalCollisionDetected(this, this.ctx)){
+        if(!CanvasCollisionDetection2D.verticalCollisionDetected(this, this.ctx)){
             this.y += this.yVelocity;
         }
         else{
@@ -60,7 +60,7 @@ export class Pong extends FillRect {
             }
         }
 
-        if(!EnvironmentCollisionDetection2D.horizontalCollisionDetected(this, this.ctx)){
+        if(!CanvasCollisionDetection2D.horizontalCollisionDetected(this, this.ctx)){
             this.x += this.xVelocity;
         }
         else{

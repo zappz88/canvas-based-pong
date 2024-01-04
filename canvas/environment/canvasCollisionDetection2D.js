@@ -1,7 +1,7 @@
-import { Coordinates2D } from "./coordinates2D.js";
-import { EnvironmentCollisionDetection } from "./environmentCollisionDetection.js";
+import { Point2D } from "../../geometry/point2D.js";
+import { CanvasCollisionDetection } from "./canvasCollisionDetection.js";
 
-export class EnvironmentCollisionDetection2D extends EnvironmentCollisionDetection {
+export class CanvasCollisionDetection2D extends CanvasCollisionDetection {
 
     constructor(){
         super();

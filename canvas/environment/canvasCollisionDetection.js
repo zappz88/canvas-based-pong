@@ -1,4 +1,4 @@
-export class EnvironmentCollisionDetection {
+export class CanvasCollisionDetection {
 
     constructor(){}
 

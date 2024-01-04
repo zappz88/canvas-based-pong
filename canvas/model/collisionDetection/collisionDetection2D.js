@@ -1,5 +1,5 @@
 import { CollisionDetection } from "./collisionDetection.js";
-import { Coordinates2D } from "./coordinates2D.js";
+import { Point2D } from "../../../geometry/point2D.js";
 
 export class CollisionDetection2D extends CollisionDetection {
 
@@ -26,8 +26,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getLeftCollisionDetected(source, target){
         if(this.leftCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -35,8 +35,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getRightCollisionDetected(source, target){
         if(this.rightCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -44,8 +44,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getHorizontalCollisionDetected(source, target){
         if(this.horizontalCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -69,8 +69,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getTopCollisionDetected(source, target){
         if(this.topCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -78,8 +78,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getBottomCollisionDetected(source, target){
         if(this.bottomCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -87,8 +87,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getVerticalCollisionDetected(source, target){
         if(this.verticalCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }
@@ -96,8 +96,8 @@ export class CollisionDetection2D extends CollisionDetection {
     static getCollisionDetected(source, target){
         if(this.horizontalCollisionDetected(source, target) || this.verticalCollisionDetected(source, target)){
             return {
-                source: new Coordinates2D(source.x, source.y),
-                target: new Coordinates2D(target.x, target.y)
+                source: new Point2D(source.x, source.y),
+                target: new Point2D(target.x, target.y)
             }
         }
     }

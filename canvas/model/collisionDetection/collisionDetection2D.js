@@ -93,8 +93,12 @@ export class CollisionDetection2D extends CollisionDetection {
         }
     }
 
+    static collisionDetected(source, target){
+        return this.horizontalCollisionDetected(source, target) || this.verticalCollisionDetected(source, target);
+    }
+
     static getCollisionDetected(source, target){
-        if(this.horizontalCollisionDetected(source, target) || this.verticalCollisionDetected(source, target)){
+        if(this.collisionDetected(source, target)){
             return {
                 source: new Point2D(source.x, source.y),
                 target: new Point2D(target.x, target.y)

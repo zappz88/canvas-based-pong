@@ -15,7 +15,7 @@ import { Pong } from "./pong.js";
 import { PowerUps } from "./powerUps.js";
 
 function animate(){
-    if(paused){
+    if(IS_PAUSED){
         return;
     }
 
@@ -25,54 +25,36 @@ function animate(){
     boardObjects.forEach((boardObject) => boardObject.update());
 
     paddles.forEach((paddle) => {
-        let point = null;
+        let collisionPoint = null;
         if(pong.isFacingRight){
-            point = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
-            if(point){
-                pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity(randomIntegerSign() * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
-                pong.setDegree(pong.degree * -1);
+            collisionPoint = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
+            if(collisionPoint){
+                pong.reverseXVelocity();
+                pong.setYVelocity(randomIntegerSign() * ((collisionPoint.source.y - collisionPoint.target.y) / paddle.height) + paddle.yVelocity);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
         else{
-            point = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
-            if(point){
-                pong.setXVelocity((pong.xVelocity * -1));
-                pong.setYVelocity(randomIntegerSign() * ((point.source.y - point.target.y) / paddle.height) + paddle.yVelocity);
-                pong.setDegree(pong.degree * -1);
+            collisionPoint = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
+            if(collisionPoint){
+                pong.reverseXVelocity();
+                pong.setYVelocity(randomIntegerSign() * ((collisionPoint.source.y - collisionPoint.target.y) / paddle.height) + paddle.yVelocity);
                 pong.isFacingRight = !pong.isFacingRight;
             }
         }
-        point = null;
+        collisionPoint = null;
     });
-
-    if(CanvasCollisionDetection2D.verticalCollisionDetected(pong, ctx)){
-        if(pong.yVelocity < 0){
-            pong.yVelocity = ((pong.yVelocity - pong.incrementingYVelocity) * -1);
-        }
-        else{
-            pong.yVelocity = ((pong.yVelocity + pong.incrementingYVelocity) * -1);
-        }
-    }
-
-    if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
-        pong.isFacingRight = !pong.isFacingRight;
-        pong.setXVelocity((pong.xVelocity * -1));
-        playerOneScore++;
-        playerOneScoreBoard.innerText = playerOneScore;
-    }
 
     if(CanvasCollisionDetection2D.leftCollisionDetected(pong, ctx)){
         pong.isFacingRight = !pong.isFacingRight;
-        pong.setXVelocity((pong.xVelocity * -1));
+        pong.reverseXVelocity();
         playerTwoScore++;
         playerTwoScoreBoard.innerText = playerTwoScore;
     }
 
     if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
         pong.isFacingRight = !pong.isFacingRight;
-        pong.setXVelocity((pong.xVelocity * -1));
+        pong.reverseXVelocity();
         playerOneScore++;
         playerOneScoreBoard.innerText = playerOneScore;
     }
@@ -93,7 +75,7 @@ function randomIntegerSign(){
 }
 
 function pauseGame(){
-    paused = !paused;
+    IS_PAUSED = !IS_PAUSED;
 }
 
 function ShowWinnerScreen(winner){
@@ -111,8 +93,7 @@ var PONG_SIZE = 10;
 var PONG_INCREMENTING_XVELOCITY = 0.1;
 var PONG_INCREMENTING_YVELOCITY = 0.1;
 var WINNING_SCORE = 10;
-var paused = true;
-var powerUps = PowerUps;
+var IS_PAUSED = true;
 
 const paddleOneKeyBoardControlMap = new KeyboardControlMap(KeyCode.KeyW, KeyCode.KeyS, KeyCode.KeyA, KeyCode.KeyD, KeyCode.Space);
 var paddleOne = new Paddle(ctx, 0, (canvas.height - 50), 0, 0, 50, 10, "#000000", paddleOneKeyBoardControlMap);
@@ -166,7 +147,7 @@ resetButton.addEventListener('click', (event) => {
 
 pauseButton.addEventListener('click', (event) => {
     
-    pauseGame(paused);
+    pauseGame(IS_PAUSED);
     animate();
 
 }, false);
@@ -180,7 +161,7 @@ startButton.addEventListener('click', (event) => {
     gameButtonContainer.style.display = "flex";
 
     setTimeout(() => { 
-        pauseGame(paused);
+        pauseGame(IS_PAUSED);
         animate();
     }, 1000)
 
@@ -216,13 +197,5 @@ document.addEventListener('keyup', (event) => {
     
     paddleOne.stop(event);
     paddleTwo.stop(event);
-
-}, false);
-
-document.addEventListener('keydown', (event) => {
-        
-    if(event.code ==="Space"){
-        pong.xVelocity *= powerUps[(Math.floor(Math.random() * powerUps.length))]; 
-    }
 
 }, false);

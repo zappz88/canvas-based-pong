@@ -70,12 +70,4 @@ export class Paddle extends StrokeRect {
                 break;
         }
     }
-
-    bump(event, pong){
-        switch(event.code){
-            case this.keyboardControlMap.bump:
-                // console.log("Space");
-                break;
-        }
-    }
 }

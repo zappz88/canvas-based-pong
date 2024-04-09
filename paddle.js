@@ -1,5 +1,6 @@
 import { StrokeRect } from "./canvas/model/strokeRect.js";
 import { CanvasCollisionDetection2D } from "./canvas/environment/canvasCollisionDetection2D.js";
+import { CollisionDetection2D } from "./canvas/model/collisionDetection/collisionDetection2D.js";
 
 export class Paddle extends StrokeRect {
 

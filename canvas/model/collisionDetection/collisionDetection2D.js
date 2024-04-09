@@ -107,12 +107,12 @@ export class CollisionDetection2D extends CollisionDetection {
     }
 
     static #isWithinXRange(source, target){
-        return ((source.x + source.width) >= target.x) && 
-               (source.x <= target.x) || (source.x <= (target.x + target.width)) && (source.x <= target.x) ; 
+        return (((source.x + source.width) >= target.x) && (source.x <= target.x)) || 
+               ((source.x <= (target.x + target.width)) && (source.x >= target.x)); 
     }
 
     static #isWithinYRange(source, target){
-        return ((source.y + source.height) >= target.y) && 
-               (source.y <= target.y) || (source.y <= (target.y + target.height)) && (source.y >= target.y);
+        return (((source.y + source.height) >= target.y) && (source.y <= target.y)) || 
+               ((source.y <= (target.y + target.height)) && (source.y >= target.y));
     }
 }

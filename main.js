@@ -12,7 +12,7 @@ import { KeyCode } from "./controls/keyCode.js";
 import { KeyboardControlMap } from "./controls/keyboardControlMap.js";
 import { Paddle } from "./paddle.js";
 import { Pong } from "./pong.js";
-import { PowerUps } from "./powerUps.js";
+import { GameObjectType } from "./gameObjectType.js";
 
 function animate(){
     if(IS_PAUSED){
@@ -25,36 +25,15 @@ function animate(){
     boardObjects.forEach((boardObject) => boardObject.update());
 
     paddles.forEach((paddle) => {
-        let collisionPoint = null;
-        if(pong.isFacingRight){
-            collisionPoint = CollisionDetection2D.getRightCollisionDetected(pong, paddle);
-            if(collisionPoint){
-                pong.reverseXVelocity();
-                pong.setYVelocity(randomIntegerSign() * ((collisionPoint.source.y - collisionPoint.target.y) / paddle.height) + paddle.yVelocity);
-                pong.isFacingRight = !pong.isFacingRight;
-            }
-        }
-        else{
-            collisionPoint = CollisionDetection2D.getLeftCollisionDetected(pong, paddle);
-            if(collisionPoint){
-                pong.reverseXVelocity();
-                pong.setYVelocity(randomIntegerSign() * ((collisionPoint.source.y - collisionPoint.target.y) / paddle.height) + paddle.yVelocity);
-                pong.isFacingRight = !pong.isFacingRight;
-            }
-        }
-        collisionPoint = null;
+        pong.onObjCollision(paddle);
     });
 
     if(CanvasCollisionDetection2D.leftCollisionDetected(pong, ctx)){
-        pong.isFacingRight = !pong.isFacingRight;
-        pong.reverseXVelocity();
         playerTwoScore++;
         playerTwoScoreBoard.innerText = playerTwoScore;
     }
 
     if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
-        pong.isFacingRight = !pong.isFacingRight;
-        pong.reverseXVelocity();
         playerOneScore++;
         playerOneScoreBoard.innerText = playerOneScore;
     }

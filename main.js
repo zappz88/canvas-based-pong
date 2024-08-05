@@ -22,21 +22,16 @@ function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    boardObjects.forEach((boardObject) => boardObject.update());
+    boardObjects.forEach((boardObject) => {
+        boardObject.update();
+        onEnvironmentCollision(boardObject);
+    });
 
     paddles.forEach((paddle) => {
         pong.onObjCollision(paddle);
     });
 
-    if(CanvasCollisionDetection2D.leftCollisionDetected(pong, ctx)){
-        playerTwoScore++;
-        playerTwoScoreBoard.innerText = playerTwoScore;
-    }
-
-    if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
-        playerOneScore++;
-        playerOneScoreBoard.innerText = playerOneScore;
-    }
+    onEnvironmentCollision(boardObjects);
 
     if(playerOneScore === WINNING_SCORE){
         pauseGame(paused);
@@ -47,6 +42,25 @@ function animate(){
         pauseGame(paused);
         ShowWinnerScreen("PlayerTwo");
     }
+}
+
+function onEnvironmentCollision(boardObject){
+    switch(boardObject.gameObjectType){
+        case GameObjectType.PONG:
+            onPongEnvironmentCollision(pong, ctx);
+            break;
+    };
+}
+
+function onPongEnvironmentCollision(pong, ctx){
+    if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
+        playerOneScore++;
+        playerOneScoreBoard.innerText = playerOneScore;
+    }
+    else if(CanvasCollisionDetection2D.leftCollisionDetected(pong, ctx)){
+        playerTwoScore++;
+        playerTwoScoreBoard.innerText = playerTwoScore;
+    };
 }
 
 function randomIntegerSign(){

@@ -104,6 +104,10 @@ export class Pong extends FillRect {
     }
 
     #onCollisionWithPaddle(paddle){
+        this.#calculateTrajectoryOnCollison(paddle);
+    }
+
+    #calculateTrajectoryOnCollison(paddle){
         const collisionPoint = CollisionDetection2D.getCollisionDetected(this, paddle);
         if(collisionPoint){
             this.reverseXVelocity();

@@ -33,13 +33,13 @@ function animate(){
 
     onEnvironmentCollision(boardObjects);
 
-    if(playerOneScore === WINNING_SCORE){
-        pauseGame(paused);
+    if(playerOneScore >= WINNING_SCORE){
+        pauseGame(IS_PAUSED);
         ShowWinnerScreen("PlayerOne");
     }
 
-    if(playerTwoScore === WINNING_SCORE){
-        pauseGame(paused);
+    if(playerTwoScore >= WINNING_SCORE){
+        pauseGame(IS_PAUSED);
         ShowWinnerScreen("PlayerTwo");
     }
 }
@@ -53,6 +53,10 @@ function onEnvironmentCollision(boardObject){
 }
 
 function onPongEnvironmentCollision(pong, ctx){
+    updatePlayerScore(pong, ctx);
+}
+
+function updatePlayerScore(pong, ctx){
     if(CanvasCollisionDetection2D.rightCollisionDetected(pong, ctx)){
         playerOneScore++;
         playerOneScoreBoard.innerText = playerOneScore;
